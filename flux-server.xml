@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Flux-Server</Name>
+  <Repository>ghcr.io/schallerje/flux-server:beta</Repository>
+  <Registry>https://github.com/users/SchallerJe/packages/container/package/flux-server</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://flux.derdrucktschonwieder.com</Support>
+  <Project>https://flux.derdrucktschonwieder.com</Project>
+  <Overview>[b]Flux[/b] is a 3D-print cockpit server: it talks to your Klipper/Moonraker, PrusaLink and Bambu Lab printers, cameras, spools and labels and serves the Flux iOS app and a web portal. [b]Closed beta, proprietary software[/b] (private, non-commercial use under the beta terms on the info page). The companion app is distributed via TestFlight. linux/amd64 only for now. LAN use only, do not expose the port to the internet.[br][br][b]Flux[/b] ist ein Cockpit-Server für den 3D-Druck: Er spricht mit Klipper/Moonraker-, PrusaLink- und Bambu-Lab-Druckern, Kameras, Spulen und Etiketten und bedient die Flux-iOS-App sowie ein Webportal. [b]Geschlossene Beta, proprietäre Software[/b] (nur privat und nicht-kommerziell, siehe Beta-Bedingungen auf der Infoseite). Die Companion-App gibt es über TestFlight. Vorerst nur linux/amd64. Nur fürs Heimnetz, Port nicht ins Internet freigeben.[br][br][b]First start / Erster Start:[/b] Open the container log and look for "Setup token", then open the WebUI and claim the server. Das Setup-Token steht im Container-Log, danach das WebUI öffnen und den Server übernehmen.[br][br][b]Permissions / Rechte:[/b] The container runs as UID 1000 (user "node"), Unraid creates appdata as nobody (99:100). Before the first start run in the Unraid terminal: [b]chown -R 1000:1000 /mnt/user/appdata/flux-server[/b] (otherwise the server cannot save anything). Der Container läuft als UID 1000, Unraid legt appdata als nobody (99:100) an: vor dem ersten Start den chown-Befehl oben im Unraid-Terminal ausführen.</Overview>
+  <Category>Tools: HomeAutomation:</Category>
+  <WebUI>http://[IP]:[PORT:3020]/</WebUI>
+  <Icon>https://flux.derdrucktschonwieder.com/icon.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>Linux/amd64 (x86_64) host. Run "chown -R 1000:1000 /mnt/user/appdata/flux-server" once before the first start. Beta: proprietary, see https://flux.derdrucktschonwieder.com</Requires>
+  <Config Name="WebUI / API Port" Target="3020" Default="3021" Mode="tcp" Description="Host port for the web portal and the app API (container port 3020, plain HTTP). Keep it LAN-only." Type="Port" Display="always" Required="true" Mask="false">3021</Config>
+  <Config Name="Data (appdata)" Target="/app/data" Default="/mnt/user/appdata/flux-server" Mode="rw" Description="All state: printers, devices, notification channels and generated secrets (secrets.json). Must be owned by UID 1000: chown -R 1000:1000 on this folder. Back it up like a password." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/flux-server</Config>
+  <Config Name="Timezone" Target="TZ" Default="Europe/Berlin" Mode="" Description="Timezone for log timestamps, e.g. Europe/Berlin." Type="Variable" Display="always" Required="false" Mask="false">Europe/Berlin</Config>
+  <Config Name="Local pairing" Target="FLUX_LOCAL_PAIRING" Default="true" Mode="" Description="true: devices on a private LAN address may send a pairing request that a paired device must approve. Set to false behind a reverse proxy or if reachable from outside your LAN." Type="Variable" Display="always" Required="false" Mask="false">true</Config>
+  <Config Name="Push relay mode" Target="FLUX_PUSH_RELAY" Default="" Mode="" Description="Optional. Set to 'off' to forbid the Flux push relay entirely (also signs the server off at start). Leave empty for the default (relay is opt-in via invitation code)." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Push relay invitation code" Target="FLUX_PUSH_RELAY_INVITE" Default="" Mode="" Description="Optional. Invitation code for the Flux push relay (beta testers get it in the Discord beta channel). Setting it counts as consent to the data transfer described in the privacy notice. Can also be entered in the web portal." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Public URL" Target="FLUX_PUBLIC_URL" Default="" Mode="" Description="Optional. Only if you expose Flux through a reverse proxy: public base URL used for snapshot links in push notifications." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted proxies" Target="FLUX_TRUST_PROXY" Default="" Mode="" Description="Optional. Number of reverse proxies in front of Flux (1 = one proxy). Leave empty unless a proxy really sits in front (the header can be forged otherwise)." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secure cookie" Target="FLUX_COOKIE_SECURE" Default="" Mode="" Description="Optional. Set to true to always mark the web session cookie Secure (behind a TLS-terminating reverse proxy)." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Master API key" Target="FLUX_API_KEY" Default="" Mode="" Description="Optional. Leave empty: it is generated on first start and stored in data/secrets.json. Only set if you want to manage it yourself (openssl rand -hex 32)." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Session secret" Target="SESSION_SECRET" Default="" Mode="" Description="Optional. Leave empty: generated on first start. Must differ from the master API key if you set both (openssl rand -hex 32)." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Anthropic API key (AI label scan)" Target="ANTHROPIC_API_KEY" Default="" Mode="" Description="Optional. Your OWN Anthropic API key for the AI spool label scan. Label photos are then sent to api.anthropic.com and cost API credit. Without it the feature is off." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <TemplateURL>https://raw.githubusercontent.com/SchallerJe/flux-unraid-templates/main/flux-server.xml</TemplateURL>
+</Container>
