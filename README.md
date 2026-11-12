@@ -13,7 +13,6 @@ Unraid (dockerMan / Community Applications format) template for the **Flux serve
    ```
 2. Unraid: **Docker** > **Template Repositories** (bottom of the page), add this line and save:
    `https://github.com/SchallerJe/flux-unraid-templates`
-   (placeholder, the repository is not published yet)
 3. **Add Container**, pick the template **Flux-Server**. Defaults are fine for a LAN setup (host port 3021). Behind a reverse proxy set *Local pairing* to `false`.
 4. **Apply.** Wait until the container runs.
 5. **Setup token:** click the container icon > **Logs** and look for `Setup token` (looks like `7K2QX-9M4VD-BH3TN`).
@@ -30,7 +29,6 @@ Updates: container icon > *Force update* (or the usual Unraid update check). Bac
    ```
 2. Unraid: **Docker** > **Template Repositories** (unten auf der Seite), diese Zeile eintragen und speichern:
    `https://github.com/SchallerJe/flux-unraid-templates`
-   (Platzhalter, das Repository ist noch nicht veröffentlicht)
 3. **Add Container**, Vorlage **Flux-Server** wählen. Für das Heimnetz passen die Standardwerte (Host-Port 3021). Hinter einem Reverse Proxy *Local pairing* auf `false` setzen.
 4. **Apply** und warten, bis der Container läuft.
 5. **Setup-Token:** Container-Icon > **Logs**, nach `Setup token` suchen (sieht aus wie `7K2QX-9M4VD-BH3TN`).
